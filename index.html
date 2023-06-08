@@ -30,12 +30,6 @@
 			right: 20px; /* Adjust the position of the button as desired */
 			z-index: 9999; /* Ensure the button is in front of the iframe */
 		}
-		.site-button {
-			position: absolute;
-			top: 20px; /* Adjust the position of the button as desired */
-			left: 20px; /* Adjust the position of the button as desired */
-			z-index: 9999; /* Ensure the button is in front of the iframe */
-		}
 		.inject-input {
 			position: fixed;
 			top: 50%;
@@ -68,21 +62,12 @@
 				input.style.display = 'none';
 			}
 		}
-
-		function redirectSite() {
-			const input = prompt('Enter the URL:');
-			if (input) {
-				const iframe = document.querySelector('iframe');
-				iframe.src = input;
-			}
-		}
 	</script>
 </head>
 <body>
 	<iframe is="x-frame-bypass" src="https://www.coolmathgames.com/"></iframe>
 	<a href="https://www.securly.com"><img src="БЛИИИИНН" alt="Created By Mark Kucherenko я блин хакер X_X"></a>
 	<button class="inject-button" onclick="showInput()">Inject</button>
-	<button class="site-button" onclick="redirectSite()">Site</button>
-	<input id="inject-input" class="inject-input" type="text
-
-							  
+	<input id="inject-input" class="inject-input" type="text" onkeyup="injectCode(event)">
+</body>
+</html>

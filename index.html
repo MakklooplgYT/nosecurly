@@ -11,6 +11,7 @@
 			padding: 0;
 			height: 100%;
 			overflow: hidden;
+			position: relative;
 		}
 		iframe {
 			display: block;
@@ -23,20 +24,31 @@
 			top: 0;
 			right: 0;
 		}
+		.inject-button {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			padding: 10px;
+			background-color: red;
+			color: white;
+			border: none;
+			cursor: pointer;
+		}
 	</style>
 	<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
 	<script src="x-frame-bypass.js" type="module"></script>
 	<script>
 		function injectCode() {
+			const iframe = document.querySelector('iframe');
 			const script = document.createElement('script');
 			script.src = 'https://raw.githubusercontent.com/zek-c/Securly-Kill-V111/main/kill.js';
-			document.body.appendChild(script);
+			iframe.contentDocument.head.appendChild(script);
 		}
 	</script>
 </head>
 <body>
-	<iframe is="x-frame-bypass" src="https://securly.com/"></iframe>
+	<iframe is="x-frame-bypass" src="https://news.ycombinator.com/"></iframe>
 	<a href="https://github.com/niutech/x-frame-bypass"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
-	<button onclick="injectCode()">Inject</button>
+	<button class="inject-button" onclick="injectCode()">Inject</button>
 </body>
 </html>

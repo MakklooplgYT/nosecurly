@@ -22,51 +22,85 @@
 			position: absolute;
 			top: 0;
 			right: 0;
-			z-index: 9999; /* Ensure the button is in front of the iframe */
 		}
-		.inject-button {
-			position: absolute;
-			top: 20px; /* Adjust the position of the button as desired */
-			right: 20px; /* Adjust the position of the button as desired */
-			z-index: 9999; /* Ensure the button is in front of the iframe */
+		#editButtonContainer {
+			display: flex;
+			justify-content: center;
+			margin-top: 10px;
 		}
-		.site-button {
-			position: absolute;
-			top: 20px; /* Adjust the position of the button as desired */
-			left: 20px; /* Adjust the position of the button as desired */
-			z-index: 9999; /* Ensure the button is in front of the iframe */
+		#editButton {
+			padding: 10px 20px;
+			background-color: #4CAF50;
+			border: none;
+			color: white;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			cursor: pointer;
+		}
+		#editCodeContainer {
+			display: none;
+			margin-top: 10px;
+		}
+		#codeTextArea {
+			width: 100%;
+			height: 100px;
 		}
 	</style>
 	<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
 	<script src="x-frame-bypass.js" type="module"></script>
 	<script>
-		function showInput() {
-			const input = document.getElementById('inject-input');
-			input.style.display = 'block';
-			input.focus();
+		function editCode() {
+			var editButton = document.getElementById('editButton');
+			var codeContainer = document.getElementById('editCodeContainer');
+			var codeTextArea = document.getElementById('codeTextArea');
+			var injectButton = document.getElementById('injectButton');
+			var code = injectButton.getAttribute('data-code');
+			
+			editButton.style.display = 'none';
+			codeContainer.style.display = 'block';
+			codeTextArea.value = code;
+			injectButton.innerText = 'Update';
+			injectButton.setAttribute('onclick', 'updateCode()');
 		}
-
-		function injectCode(event) {
-			if (event.key === 'Enter') {
-				const input = document.getElementById('inject-input');
-				const code = input.value.trim();
-
-				const iframe = document.querySelector('iframe');
-				const script = document.createElement('script');
-				script.textContent = code;
-				iframe.contentWindow.document.body.appendChild(script);
-
-				input.value = '';
-				input.style.display = 'none';
-			}
+		
+		function updateCode() {
+			var codeTextArea = document.getElementById('codeTextArea');
+			var injectButton = document.getElementById('injectButton');
+			
+			var code = codeTextArea.value;
+			injectButton.setAttribute('data-code', code);
+			
+			alert('Code updated successfully!');
+			
+			var editButton = document.getElementById('editButton');
+			var codeContainer = document.getElementById('editCodeContainer');
+			
+			editButton.style.display = 'inline-block';
+			codeContainer.style.display = 'none';
+			injectButton.innerText = 'Inject';
+			injectButton.setAttribute('onclick', 'injectCode()');
+		}
+		
+		function injectCode() {
+			var injectButton = document.getElementById('injectButton');
+			var code = injectButton.getAttribute('data-code');
+			
+			eval(code);
 		}
 	</script>
 </head>
 <body>
-	<iframe is="x-frame-bypass" src="https://www.bing.com/"></iframe>
+	<iframe is="x-frame-bypass" src="https://www.google.com/?igu=1/"></iframe>
 	<a href="https://www.securly.com"><img src="БЛИИИИНН" alt="Created By Mark Kucherenko я блин хакер X_X"></a>
-	<button class="inject-button" onclick="showInput()">Inject</button>
-	<button class="site-button" onclick="document.querySelector('iframe').src = 'https://example.com'">Site</button>
-	<input id="inject-input" class="inject-input" type="text" onkeyup="injectCode(event)">
+	<div id="editButtonContainer">
+		<button id="editButton" onclick="editCode()">Edit</button>
+	</div>
+	<div id="editCodeContainer">
+		<textarea id="codeTextArea" placeholder="Paste your JavaScript bookmarklet code here"></textarea>
+	</div>
+	<button id="injectButton" data-code="alert('Initial code');"
+		onclick="injectCode()">Inject</button>
 </body>
 </html>

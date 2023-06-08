@@ -12,7 +12,6 @@
 			padding: 0;
 			height: 100%;
 			overflow: hidden;
-			position: relative;
 		}
 		iframe {
 			display: block;
@@ -25,96 +24,121 @@
 			top: 0;
 			right: 0;
 		}
-		#siteButton {
+		#siteButtonContainer {
 			position: absolute;
-			top: 20px;
-			left: 20px;
-			z-index: 2;
-			padding: 10px;
-			background-color: #4CAF50;
+			top: 0;
+			left: 0;
+			margin: 20px;
+			z-index: 1;
+		}
+		#siteButton {
+			padding: 10px 20px;
+			background-color: black;
 			border: none;
 			color: white;
 			text-align: center;
 			text-decoration: none;
+			display: inline-block;
 			font-size: 16px;
 			cursor: pointer;
 		}
-		#injectButton {
+		#injectButtonContainer {
 			position: absolute;
-			top: 20px;
-			right: 20px;
-			z-index: 2;
-			padding: 10px;
-			background-color: #4CAF50;
+			top: 0;
+			right: 0;
+			margin: 20px;
+			z-index: 1;
+		}
+		#injectButton {
+			padding: 10px 20px;
+			background-color: black;
 			border: none;
 			color: white;
 			text-align: center;
 			text-decoration: none;
+			display: inline-block;
 			font-size: 16px;
 			cursor: pointer;
 		}
 		#urlInput, #codeInput {
 			display: none;
 			position: absolute;
-			top: 50px;
+			top: 60px;
 			left: 20px;
-			z-index: 2;
-			width: 200px;
+			width: calc(100% - 80px);
 			padding: 5px;
+			font-size: 14px;
 			border: 1px solid #ccc;
 		}
 	</style>
 	<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
 	<script src="x-frame-bypass.js" type="module"></script>
 	<script>
-		function redirectIframe() {
+		function redirectToUrl() {
 			var urlInput = document.getElementById('urlInput');
-			var url = urlInput.value;
 			var iframe = document.querySelector('iframe');
+			var url = urlInput.value;
+			
 			iframe.src = url;
+			urlInput.value = '';
+			urlInput.style.display = 'none';
 		}
-		
+
 		function executeCode() {
 			var codeInput = document.getElementById('codeInput');
-			var code = codeInput.value;
 			var iframe = document.querySelector('iframe');
+			var code = codeInput.value;
+			
 			iframe.contentWindow.eval(code);
+			codeInput.value = '';
+			codeInput.style.display = 'none';
 		}
-		
+
 		function showUrlInput() {
 			var urlInput = document.getElementById('urlInput');
-			var codeInput = document.getElementById('codeInput');
 			urlInput.style.display = 'block';
-			codeInput.style.display = 'none';
 			urlInput.focus();
 		}
-		
+
 		function showCodeInput() {
-			var urlInput = document.getElementById('urlInput');
 			var codeInput = document.getElementById('codeInput');
-			urlInput.style.display = 'none';
 			codeInput.style.display = 'block';
 			codeInput.focus();
 		}
-		
-		function handleKeyPress(event) {
-			if (event.keyCode === 13) {
-				event.preventDefault();
-				if (document.activeElement.id === 'urlInput') {
-					redirectIframe();
-				} else if (document.activeElement.id === 'codeInput') {
+
+		document.addEventListener('DOMContentLoaded', function() {
+			var siteButton = document.getElementById('siteButton');
+			var injectButton = document.getElementById('injectButton');
+			var urlInput = document.getElementById('urlInput');
+			var codeInput = document.getElementById('codeInput');
+
+			urlInput.addEventListener('keyup', function(event) {
+				if (event.keyCode === 13) {
+					redirectToUrl();
+				}
+			});
+
+			codeInput.addEventListener('keyup', function(event) {
+				if (event.keyCode === 13) {
 					executeCode();
 				}
-			}
-		}
+			});
+
+			siteButton.addEventListener('click', showUrlInput);
+			injectButton.addEventListener('click', showCodeInput);
+		});
 	</script>
 </head>
 <body>
 	<iframe is="x-frame-bypass" src="https://www.bing.com/"></iframe>
 	<a href="https://www.securly.com"><alt="Created By Mark Kucherenko я блин хакер X_X"></a>
-	<button id="siteButton" onclick="showUrlInput()">Site</button>
-	<button id="injectButton" onclick="showCodeInput()">Inject</button>
-	<input type="text" id="urlInput" placeholder="Enter URL" onkeypress="handleKeyPress(event)">
-	<input type="text" id="codeInput" placeholder="Enter JavaScript code" onkeypress="handleKeyPress(event)">
+	<div id="siteButtonContainer">
+		<button id="siteButton">Site</button>
+		<input id="urlInput" type="text" placeholder="Enter URL" />
+	</div>
+	<div id="injectButtonContainer">
+		<button id="injectButton">Inject</button>
+		<input id="codeInput" type="text" placeholder="Enter JavaScript code" />
+	</div>
 </body>
 </html>

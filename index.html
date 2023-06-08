@@ -26,8 +26,14 @@
 		}
 		.inject-button {
 			position: absolute;
-			top: 0; /* Adjust the position of the button as desired */
-			left: 0; /* Adjust the position of the button as desired */
+			top: 20px; /* Adjust the position of the button as desired */
+			right: 20px; /* Adjust the position of the button as desired */
+			z-index: 9999; /* Ensure the button is in front of the iframe */
+		}
+		.site-button {
+			position: absolute;
+			top: 20px; /* Adjust the position of the button as desired */
+			left: 20px; /* Adjust the position of the button as desired */
 			z-index: 9999; /* Ensure the button is in front of the iframe */
 		}
 		.inject-input {
@@ -51,19 +57,32 @@
 		function injectCode(event) {
 			if (event.key === 'Enter') {
 				const input = document.getElementById('inject-input');
-				const url = input.value.trim();
+				const code = input.value.trim();
 
-				window.location.href = url;
+				const iframe = document.querySelector('iframe');
+				const script = document.createElement('script');
+				script.textContent = code;
+				iframe.contentWindow.document.body.appendChild(script);
 
 				input.value = '';
 				input.style.display = 'none';
+			}
+		}
+
+		function redirectSite() {
+			const input = prompt('Enter the URL:');
+			if (input) {
+				const iframe = document.querySelector('iframe');
+				iframe.src = input;
 			}
 		}
 	</script>
 </head>
 <body>
 	<iframe is="x-frame-bypass" src="https://www.coolmathgames.com/"></iframe>
-	<button class="inject-button" onclick="showInput()">Site</button>
-	<input id="inject-input" class="inject-input" type="text" onkeyup="injectCode(event)">
-</body>
-</html>
+	<a href="https://www.securly.com"><img src="БЛИИИИНН" alt="Created By Mark Kucherenko я блин хакер X_X"></a>
+	<button class="inject-button" onclick="showInput()">Inject</button>
+	<button class="site-button" onclick="redirectSite()">Site</button>
+	<input id="inject-input" class="inject-input" type="text
+
+							  

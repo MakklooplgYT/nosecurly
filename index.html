@@ -22,13 +22,52 @@
 			position: absolute;
 			top: 0;
 			right: 0;
+			z-index: 9999; /* Ensure the button is in front of the iframe */
+		}
+		.inject-button {
+			position: absolute;
+			top: 20px; /* Adjust the position of the button as desired */
+			right: 20px; /* Adjust the position of the button as desired */
+			z-index: 9999; /* Ensure the button is in front of the iframe */
+		}
+		.inject-input {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 9999; /* Ensure the input is in front of the iframe */
+			display: none; /* Hide the input initially */
 		}
 	</style>
 	<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
 	<script src="x-frame-bypass.js" type="module"></script>
+	<script>
+		function showInput() {
+			const input = document.getElementById('inject-input');
+			input.style.display = 'block';
+			input.focus();
+		}
+
+		function injectCode(event) {
+			if (event.key === 'Enter') {
+				const input = document.getElementById('inject-input');
+				const code = input.value.trim();
+
+				const iframe = document.querySelector('iframe');
+				const script = document.createElement('script');
+				script.textContent = code;
+				iframe.contentWindow.document.body.appendChild(script);
+
+				input.value = '';
+				input.style.display = 'none';
+			}
+		}
+	</script>
 </head>
 <body>
 	<iframe is="x-frame-bypass" src="https://www.coolmathgames.com/"></iframe>
 	<a href="https://www.securly.com"><img src="БЛИИИИНН" alt="Created By Mark Kucherenko я блин хакер X_X"></a>
+	<button class="inject-button" onclick="showInput()">Inject</button>
+	<input id="inject-input" class="inject-input" type="text" onkeyup="injectCode(event)">
 </body>
 </html>

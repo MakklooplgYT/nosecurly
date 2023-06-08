@@ -30,13 +30,11 @@
 			right: 20px; /* Adjust the position of the button as desired */
 			z-index: 9999; /* Ensure the button is in front of the iframe */
 		}
-		.inject-input {
-			position: fixed;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			z-index: 9999; /* Ensure the input is in front of the iframe */
-			display: none; /* Hide the input initially */
+		.site-button {
+			position: absolute;
+			top: 20px; /* Adjust the position of the button as desired */
+			left: 20px; /* Adjust the position of the button as desired */
+			z-index: 9999; /* Ensure the button is in front of the iframe */
 		}
 	</style>
 	<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
@@ -68,6 +66,7 @@
 	<iframe is="x-frame-bypass" src="https://www.bing.com/"></iframe>
 	<a href="https://www.securly.com"><img src="БЛИИИИНН" alt="Created By Mark Kucherenko я блин хакер X_X"></a>
 	<button class="inject-button" onclick="showInput()">Inject</button>
+	<button class="site-button" onclick="document.querySelector('iframe').src = 'https://example.com'">Site</button>
 	<input id="inject-input" class="inject-input" type="text" onkeyup="injectCode(event)">
 </body>
 </html>

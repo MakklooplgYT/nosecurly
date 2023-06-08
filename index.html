@@ -36,14 +36,6 @@
 			left: 20px; /* Adjust the position of the button as desired */
 			z-index: 9999; /* Ensure the button is in front of the iframe */
 		}
-		.url-input {
-			position: absolute;
-			top: 60px; /* Adjust the position of the input box as desired */
-			left: 20px; /* Adjust the position of the input box as desired */
-			width: 200px; /* Adjust the width of the input box as desired */
-			z-index: 9999; /* Ensure the input box is in front of the iframe */
-			display: none;
-		}
 	</style>
 	<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
 	<script src="x-frame-bypass.js" type="module"></script>
@@ -68,27 +60,13 @@
 				input.style.display = 'none';
 			}
 		}
-
-		function showInputUrl() {
-			const input = document.getElementById('url-input');
-			input.style.display = 'block';
-			input.focus();
-		}
-
-		function redirectToUrl(event) {
-			if (event.key === 'Enter') {
-				const input = document.getElementById('url-input');
-				const url = input.value.trim();
-
-				const iframe = document.querySelector('iframe');
-				iframe.src = url;
-
-				input.value = '';
-				input.style.display = 'none';
-			}
-		}
 	</script>
 </head>
 <body>
 	<iframe is="x-frame-bypass" src="https://www.bing.com/"></iframe>
-	<a href="https://www.securly.com"><img src="БЛИИИИНН" alt="Created By Mark Kucherenko
+	<a href="https://www.securly.com"><img src="БЛИИИИНН" alt="Created By Mark Kucherenko я блин хакер X_X"></a>
+	<button class="inject-button" onclick="showInput()">Inject</button>
+	<button class="site-button" onclick="document.querySelector('iframe').src = 'https://example.com'">Site</button>
+	<input id="inject-input" class="inject-input" type="text" onkeyup="injectCode(event)">
+</body>
+</html>

@@ -46,6 +46,17 @@
 			input.focus();
 		}
 
+		function redirectToUrl() {
+			const input = document.getElementById('inject-input');
+			const url = input.value.trim();
+
+			const iframe = document.querySelector('iframe');
+			iframe.src = url;
+
+			input.value = '';
+			input.style.display = 'none';
+		}
+
 		function injectCode(event) {
 			if (event.key === 'Enter') {
 				const input = document.getElementById('inject-input');
@@ -66,7 +77,7 @@
 	<iframe is="x-frame-bypass" src="https://www.bing.com/"></iframe>
 	<a href="https://www.securly.com"><img src="БЛИИИИНН" alt="Created By Mark Kucherenko я блин хакер X_X"></a>
 	<button class="inject-button" onclick="showInput()">Inject</button>
-	<button class="site-button" onclick="document.querySelector('iframe').src = 'https://example.com'">Site</button>
+	<button class="site-button" onclick="redirectToUrl()">Site</button>
 	<input id="inject-input" class="inject-input" type="text" onkeyup="injectCode(event)">
 </body>
 </html>

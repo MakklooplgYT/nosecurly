@@ -7,6 +7,7 @@
 	<title>X-Frame-Bypass Web Component Demo</title>
 	<style>
 		html, body {
+			background-color: #111111;
 			margin: 0;
 			padding: 0;
 			height: 100%;
@@ -17,7 +18,7 @@
 			display: block;
 			width: calc(100% - 0px);
 			height: calc(100% - 0px);
-			margin: 20px;
+			margin: 0px;
 		}
 		img {
 			position: absolute;
@@ -110,7 +111,7 @@
 </head>
 <body>
 	<iframe is="x-frame-bypass" src="https://www.bing.com/"></iframe>
-	<a href="https://www.securly.com"><img src="БЛИИИИНН" alt="Created By Mark Kucherenko я блин хакер X_X"></a>
+	<a href="https://www.securly.com"><alt="Created By Mark Kucherenko я блин хакер X_X"></a>
 	<button id="siteButton" onclick="showUrlInput()">Site</button>
 	<button id="injectButton" onclick="showCodeInput()">Inject</button>
 	<input type="text" id="urlInput" placeholder="Enter URL" onkeypress="handleKeyPress(event)">

@@ -60,7 +60,7 @@
 			position: absolute;
 			bottom: 10px;
 			right: 10px;
-			background-color: #131313;
+			background-color: black;
 			padding: 10px;
 			z-index: 1;
 		}
@@ -86,7 +86,7 @@
 			cursor: pointer;
 		}
 		#injectButton {
-			background-color: #D1EAE9;
+			background-color: black;
 			color: black;
 			border: none;
 			padding: 5px 10px;
@@ -96,7 +96,7 @@
 			margin-top: 10px;
 		}
 		#inputField {
-			background-color: #D1EAE9;
+			background-color: black;
 			width: 92%;
 			padding: 5px;
 			margin-top: 5px;
@@ -168,8 +168,8 @@
 		<button id="menuCloseButton" onclick="closeMenu()">X</button>
 		<div id="menuContent">
 			<h4 style="text-align: center; color: white;">This securely bypass was compiled<br>by Mark Kucherenko</h4> <!-- Added title "something" -->
-			<button id="siteButton" onclick="handleSiteButtonClick()">Redirect</button>
-			<button id="injectButton" onclick="handleInjectButtonClick()">Inject</button>
+			<button id="siteButton" onclick="handleSiteButtonClick()" style="color: white;">Redirect</button>
+			<button id="injectButton" onclick="handleInjectButtonClick()" style="color: white;">Inject</button>
 			<div id="inputContainer">
 				<input type="text" id="inputField" placeholder="Enter URL or JavaScript code" />
 			</div>

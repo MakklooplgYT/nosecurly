@@ -167,8 +167,6 @@
 			if (username === 'Makk' && password === '1234') {
 				document.getElementById('loginPage').style.display = 'none';
 				document.getElementById('contentPage').style.display = 'block';
-			} else {
-				alert('Incorrect username or password.');
 			}
 		}
 	</script>
@@ -176,10 +174,10 @@
 <body>
 	<div id="loginPage" class="login-page">
 		<div class="login-box">
-			<h2 class="login-title">Login</h2>
-			<input type="text" id="username" class="login-input" placeholder="Username" />
-			<input type="password" id="password" class="login-input" placeholder="Password" />
-			<button id="loginButton" class="login-button" onclick="handleLogin()">Log In</button>
+				<h2 class="login-title">Login</h2>
+				<input type="text" id="username" class="login-input" placeholder="Username" />
+				<input type="password" id="password" class="login-input" placeholder="Password" />
+				<button id="loginButton" class="login-button" onclick="handleLogin()">Log In</button>
 		</div>
 	</div>
 	<div id="contentPage" style="display: none;">

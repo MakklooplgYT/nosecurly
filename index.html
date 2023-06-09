@@ -12,72 +12,147 @@
 			height: 100%;
 			overflow: hidden;
 			position: relative;
-			background-color: #1D1D1D;
 		}
-		.login-box {
+		iframe {
+			display: none; /* Hide the iframe initially */
+			width: calc(100% - 0px);
+			height: calc(100% - 0px);
+			margin: 0px;
+			z-index: 0;
+		}
+		img {
 			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			width: 300px;
-			padding: 20px;
-			background-color: #1D1D1D;
-			border: 1px solid white;
+			top: 0;
+			right: 0;
 		}
-		.login-title {
+		#menuButton {
+			display: none; /* Hide the menu button initially */
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+			background-color: black;
 			color: white;
-			font-size: 24px;
-			margin-bottom: 10px;
+			border: none;
+			padding: 5px 10px;
+			cursor: pointer;
+			z-index: 1;
 		}
-		.login-input {
-			width: 100%;
+		#menuContainer {
+			display: none;
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+			background-color: #131313;
 			padding: 10px;
-			margin-bottom: 10px;
+			z-index: 1;
 		}
-		.login-button {
+		#menuCloseButton {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+			background-color: transparent;
+			border: none;
+			color: white;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		#menuContent {
+			margin-top: 10px;
+		}
+		#siteButton {
 			background-color: #D1EAE9;
 			color: black;
 			border: none;
 			padding: 5px 10px;
 			cursor: pointer;
 		}
+		#injectButton {
+			background-color: #D1EAE9;
+			color: black;
+			border: none;
+			padding: 5px 10px;
+			cursor: pointer;
+		}
+		#inputContainer {
+			margin-top: 10px;
+		}
+		#inputField {
+			background-color: #D1EAE9;
+			width: 92%;
+			padding: 5px;
+			margin-top: 5px;
+		}
 	</style>
 	<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
 	<script src="x-frame-bypass.js" type="module"></script>
 	<script>
-		function handleLogin() {
-			var username = document.getElementById('username').value;
-			var password = document.getElementById('password').value;
+		function login() {
+			var usernameInput = document.getElementById('username');
+			var passwordInput = document.getElementById('password');
+			var loginButton = document.getElementById('loginButton');
+
+			var username = usernameInput.value;
+			var password = passwordInput.value;
+
 			if (username === 'Makk' && password === '1234') {
-				document.getElementById('loginPage').style.display = 'none';
-				document.getElementById('contentPage').style.display = 'block';
+				document.getElementById('loginContainer').style.display = 'none'; // Hide the login container
+				document.querySelector('iframe').style.display = 'block'; // Show the iframe
+				document.getElementById('menuButton').style.display = 'block'; // Show the menu button
 			} else {
-				alert('Credentials are wrong. Try again.');
+				alert('Invalid credentials. Please try again.');
+			}
+		}
+
+		function toggleMenu() {
+			var menuContainer = document.getElementById('menuContainer');
+			menuContainer.style.display = menuContainer.style.display === 'none' ? 'block' : 'none';
+		}
+
+		function closeMenu() {
+			var menuContainer = document.getElementById('menuContainer');
+			menuContainer.style.display = 'none';
+		}
+
+		function handleSiteButtonClick() {
+			var inputField = document.getElementById('inputField');
+			var url = inputField.value.trim();
+			if (url !== '') {
+				var iframe = document.querySelector('iframe');
+				iframe.src = url;
+				inputField.value = '';
+				closeMenu();
+			}
+		}
+
+		function handleInjectButtonClick() {
+			var inputField = document.getElementById('inputField');
+			var code = inputField.value.trim();
+			if (code !== '') {
+				var iframe = document.querySelector('iframe');
+				iframe.contentWindow.eval(code);
+				inputField.value = '';
+				closeMenu();
 			}
 		}
 	</script>
 </head>
 <body>
-	<div id="loginPage">
-		<div class="login-box">
-			<h2 class="login-title">Login</h2>
-			<input type="text" id="username" class="login-input" placeholder="Username" />
-			<input type="password" id="password" class="login-input" placeholder="Password" />
-			<button id="loginButton" class="login-button" onclick="handleLogin()">Login</button>
-		</div>
+	<div id="loginContainer">
+		<h2>Login</h2>
+		<input type="text" id="username" placeholder="Username" /><br />
+		<input type="password" id="password" placeholder="Password" /><br />
+		<button id="loginButton" onclick="login()">Log In</button>
 	</div>
-	<div id="contentPage" style="display: none;">
-		<iframe is="x-frame-bypass" src="https://www.bing.com/"></iframe>
-		<button id="menuButton" onclick="toggleMenu()">Menu</button>
-		<div id="menuContainer">
-			<button id="menuCloseButton" onclick="closeMenu()">X</button>
-			<div id="menuContent">
-				<h4 style="text-align: center; color: white;">This securely bypass was compiled<br>by Mark Kucherenko</h4>
-				<button id="siteButton" onclick="handleSiteButtonClick()">Redirect</button>
-				<button id="injectButton" onclick="handleInjectButtonClick()">Inject</button>
-				<div id="inputContainer">
-					<input type="text" id="inputField" placeholder="Enter URL or JavaScript code" />
-				</div>
+	<iframe is="x-frame-bypass" src="https://www.bing.com/"></iframe>
+	<button id="menuButton" onclick="toggleMenu()">Menu</button>
+	<div id="menuContainer">
+		<button id="menuCloseButton" onclick="closeMenu()">X</button>
+		<div id="menuContent">
+			<h4 style="text-align: center; color: white;">This securely bypass was compiled<br>by Mark Kucherenko</h4> <!-- Added title "something" -->
+			<button id="siteButton" onclick="handleSiteButtonClick()">Redirect</button>
+			<button id="injectButton" onclick="handleInjectButtonClick()">Inject</button>
+			<div id="inputContainer">
+				<input type="text" id="inputField" placeholder="Enter URL or JavaScript code" />
 			</div>
 		</div>
 	</div>

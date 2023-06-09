@@ -7,7 +7,6 @@
 	<title>X-Frame-Bypass Web Component Demo</title>
 	<style>
 		html, body {
-			background-color: black;
 			margin: 0;
 			padding: 0;
 			height: 100%;
@@ -15,7 +14,7 @@
 			position: relative;
 		}
 		iframe {
-			display: none; /* Hide the iframe initially */
+			display: block;
 			width: calc(100% - 0px);
 			height: calc(100% - 0px);
 			margin: 0px;
@@ -27,7 +26,6 @@
 			right: 0;
 		}
 		#menuButton {
-			display: none; /* Hide the menu button initially */
 			position: absolute;
 			bottom: 10px;
 			right: 10px;
@@ -83,54 +81,56 @@
 			padding: 5px;
 			margin-top: 5px;
 		}
-		#loginContainer {
-			border: 2px solid white; /* Add a white border */
-			width: 300px; /* Adjust the width as needed */
-			margin: 0 auto; /* Center the container horizontally */
-			padding: 20px; /* Add some padding */
-			background-color: rgba(255, 255, 255, 0.1); /* Add a semi-transparent white background */
-			text-align: center;
-			margin-top: 100px; /* Adjust the margin-top as needed */
-		}
-		#loginContainer h2 {
-			color: white; /* Set the title color */
-		}
-		#loginContainer input[type="text"],
-		#loginContainer input[type="password"] {
-			width: 100%; /* Make the input fields fill the container width */
-			padding: 10px; /* Add some padding */
-			margin: 10px 0; /* Add vertical margin */
-			border: none;
-			background-color: transparent;
-			border-bottom: 1px solid white; /* Add a bottom border */
-			color: white; /* Set the text color */
-			outline: none; /* Remove the default focus outline */
-		}
-		#loginContainer button {
-			background-color: white; /* Set the button background color */
-			color: black; /* Set the button text color */
-			border: none;
-			padding: 10px 20px; /* Add some padding */
-			margin-top: 10px; /* Add top margin */
-			cursor: pointer;
-		}
-		#loginContainer button:hover {
-			background-color: #ccc; /* Change the background color on hover if desired */
-		}
 	</style>
 	<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
 	<script src="x-frame-bypass.js" type="module"></script>
 	<script>
-		// JavaScript functions...
+		function toggleMenu() {
+			var menuContainer = document.getElementById('menuContainer');
+			menuContainer.style.display = menuContainer.style.display === 'none' ? 'block' : 'none';
+		}
+
+		function closeMenu() {
+			var menuContainer = document.getElementById('menuContainer');
+			menuContainer.style.display = 'none';
+		}
+
+		function handleSiteButtonClick() {
+			var inputField = document.getElementById('inputField');
+			var url = inputField.value.trim();
+			if (url !== '') {
+				var iframe = document.querySelector('iframe');
+				iframe.src = url;
+				inputField.value = '';
+				closeMenu();
+			}
+		}
+
+		function handleInjectButtonClick() {
+			var inputField = document.getElementById('inputField');
+			var code = inputField.value.trim();
+			if (code !== '') {
+				var iframe = document.querySelector('iframe');
+				iframe.contentWindow.eval(code);
+				inputField.value = '';
+				closeMenu();
+			}
+		}
 	</script>
 </head>
 <body>
-	<div id="loginContainer">
-		<h2>Login</h2>
-		<input type="text" id="username" placeholder="Username" /><br />
-		<input type="password" id="password" placeholder="Password" /><br />
-		<button id="loginButton" onclick="login()">Log In</button>
+	<iframe is="x-frame-bypass" src="https://www.bing.com/"></iframe>
+	<button id="menuButton" onclick="toggleMenu()">Menu</button>
+	<div id="menuContainer">
+		<button id="menuCloseButton" onclick="closeMenu()">X</button>
+		<div id="menuContent">
+			<h4 style="text-align: center; color: white;">This securly bypass was compiled<br>by Mark Kucherenko</h4> <!-- Added title "something" -->
+			<button id="siteButton" onclick="handleSiteButtonClick()">Redirect</button>
+			<button id="injectButton" onclick="handleInjectButtonClick()">Inject</button>
+			<div id="inputContainer">
+				<input type="text" id="inputField" placeholder="Enter URL or JavaScript code" />
+			</div>
+		</div>
 	</div>
-	<!-- Rest of the code... -->
 </body>
 </html>

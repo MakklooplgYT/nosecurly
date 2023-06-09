@@ -83,6 +83,43 @@
 			padding: 5px;
 			margin-top: 5px;
 		}
+		.container {
+			display: flex;
+			justify-content: center;
+			align-items: center;	
+			height: 100vh;
+			background-color: black;
+		}
+	
+		.box {
+			width: 300px;
+			padding: 20px;
+			border: 1px solid white;
+			border-radius: 5px;
+			background-color: black;
+		}
+	
+		.box h2 {
+			color: white;
+		}
+	
+		.box input[type="text"],
+		.box input[type="password"],
+		.box button {
+			display: block;
+			margin-bottom: 10px;
+			width: 100%;
+			padding: 5px;
+		}
+	
+		.box button {
+			background-color: white;
+			color: black;
+			border: none;
+			border-radius: 3px;
+			padding: 10px;
+			cursor: pointer;
+		}
 	</style>
 	<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
 	<script src="x-frame-bypass.js" type="module"></script>
@@ -138,11 +175,13 @@
 	</script>
 </head>
 <body>
-	<div id="loginContainer">
-		<h2 style="color: white;">Login</h2>
-		<input type="text" id="username" placeholder="Username" /><br />
-		<input type="password" id="password" placeholder="Password" /><br />
-		<button id="loginButton" onclick="login()">Log In</button>
+	<div class="container">
+		<div class="box">
+			<h2>Login</h2>
+			<input type="text" id="username" placeholder="Username" />
+			<input type="password" id="password" placeholder="Password" />
+			<button id="loginButton" onclick="login()">Log In</button>
+		</div>
 	</div>
 	<iframe is="x-frame-bypass" src="https://www.bing.com/"></iframe>
 	<button id="menuButton" onclick="toggleMenu()">Menu</button>

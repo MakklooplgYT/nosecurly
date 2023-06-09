@@ -14,7 +14,7 @@
 			position: relative;
 		}
 		iframe {
-			display: block;
+			display: none; /* Hide the iframe initially */
 			width: calc(100% - 0px);
 			height: calc(100% - 0px);
 			margin: 0px;
@@ -26,6 +26,7 @@
 			right: 0;
 		}
 		#menuButton {
+			display: none; /* Hide the menu button initially */
 			position: absolute;
 			bottom: 10px;
 			right: 10px;
@@ -85,6 +86,23 @@
 	<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
 	<script src="x-frame-bypass.js" type="module"></script>
 	<script>
+		function login() {
+			var usernameInput = document.getElementById('username');
+			var passwordInput = document.getElementById('password');
+			var loginButton = document.getElementById('loginButton');
+
+			var username = usernameInput.value;
+			var password = passwordInput.value;
+
+			if (username === 'Makk' && password === '1234') {
+				document.getElementById('loginContainer').style.display = 'none'; // Hide the login container
+				document.querySelector('iframe').style.display = 'block'; // Show the iframe
+				document.getElementById('menuButton').style.display = 'block'; // Show the menu button
+			} else {
+				alert('Invalid credentials. Please try again.');
+			}
+		}
+
 		function toggleMenu() {
 			var menuContainer = document.getElementById('menuContainer');
 			menuContainer.style.display = menuContainer.style.display === 'none' ? 'block' : 'none';
@@ -119,12 +137,18 @@
 	</script>
 </head>
 <body>
+	<div id="loginContainer">
+		<h2>Login</h2>
+		<input type="text" id="username" placeholder="Username" /><br />
+		<input type="password" id="password" placeholder="Password" /><br />
+		<button id="loginButton" onclick="login()">Log In</button>
+	</div>
 	<iframe is="x-frame-bypass" src="https://www.bing.com/"></iframe>
 	<button id="menuButton" onclick="toggleMenu()">Menu</button>
 	<div id="menuContainer">
 		<button id="menuCloseButton" onclick="closeMenu()">X</button>
 		<div id="menuContent">
-			<h4 style="text-align: center; color: white;">This securly bypass was compiled<br>by Mark Kucherenko</h4> <!-- Added title "something" -->
+			<h4 style="text-align: center; color: white;">This securely bypass was compiled<br>by Mark Kucherenko</h4> <!-- Added title "something" -->
 			<button id="siteButton" onclick="handleSiteButtonClick()">Redirect</button>
 			<button id="injectButton" onclick="handleInjectButtonClick()">Inject</button>
 			<div id="inputContainer">

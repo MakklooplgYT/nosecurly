@@ -11,73 +11,80 @@
 			padding: 0;
 			height: 100%;
 			overflow: hidden;
-			position: relative;
 		}
 		iframe {
 			display: block;
-			width: calc(100% - 40px);
-			height: calc(100% - 40px);
-			margin: 20px;
-			z-index: 1;
+			width: calc(100% - 0px);
+			height: calc(100% - 0px);
+			margin: 0px;
 		}
-		.button-menu {
+		img {
 			position: absolute;
-			bottom: 10px;
-			right: 10px;
-			background-color: black;
-			color: white;
+			top: 0;
+			right: 0;
+		}
+		#editButtonContainer {
+			display: flex;
+			justify-content: center;
+			margin-top: 10px;
+		}
+		#editButton {
+			padding: 10px 20px;
+			background-color: #4CAF50;
 			border: none;
-			padding: 5px;
+			color: white;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
 			cursor: pointer;
-			z-index: 2;
+		}
+		#editCodeContainer {
+			display: none;
+			margin-top: 10px;
+		}
+		#codeTextArea {
+			width: 100%;
+			height: 100px;
 		}
 		.menu {
 			position: absolute;
-			bottom: 40px;
-			right: 20px;
-			background-color: #ccc;
-			border: 1px solid #999;
+			right: 0;
+			bottom: 0;
+			width: 200px;
+			background-color: #f0f0f0;
 			padding: 10px;
-			display: none;
-			z-index: 2;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 		}
-		.menu.open {
+		.menu button {
 			display: block;
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 5px;
+			background-color: black;
+			color: white;
+			border: none;
+			text-align: center;
+			text-decoration: none;
+			font-size: 16px;
+			cursor: pointer;
 		}
-		.menu .close-button {
+		.menu button.close {
 			position: absolute;
 			top: 5px;
 			right: 5px;
-			background-color: #999;
-			color: #fff;
+			width: auto;
+			padding: 5px;
+			background-color: #f0f0f0;
+			color: black;
 			border: none;
-			width: 20px;
-			height: 20px;
-			font-size: 14px;
-			border-radius: 50%;
-			cursor: pointer;
 		}
-		.menu .site-button {
-			background-color: black;
-			color: white;
-			border: none;
-			padding: 5px 10px;
-			margin-right: 5px;
-			cursor: pointer;
-		}
-		.menu .inject-button {
-			background-color: black;
-			color: white;
-			border: none;
-			padding: 5px 10px;
-			cursor: pointer;
-		}
-		.menu .input-container {
-			margin-top: 10px;
-		}
-		.menu input[type="text"],
-		.menu textarea {
+		.menu input[type="text"] {
 			width: 100%;
+			padding: 5px;
+			margin-bottom: 5px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
 		}
 	</style>
 	<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
@@ -85,81 +92,63 @@
 	<script>
 		function toggleMenu() {
 			var menu = document.getElementById('menu');
-			menu.classList.toggle('open');
+			menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
 		}
-
-		function hideMenu() {
+		
+		function closeMenu() {
 			var menu = document.getElementById('menu');
-			menu.classList.remove('open');
+			menu.style.display = 'none';
 		}
-
-		function redirectSite() {
+		
+		function showSiteInput() {
+			var siteButton = document.getElementById('siteButton');
 			var menu = document.getElementById('menu');
-			var siteInput = document.getElementById('siteInput');
-			var url = siteInput.value;
-			var iframe = document.querySelector('iframe');
-			iframe.src = url;
-			siteInput.value = '';
-			hideMenu();
+			var siteInput = document.createElement('input');
+			
+			siteInput.type = 'text';
+			siteInput.id = 'siteInput';
+			siteInput.placeholder = 'Enter URL';
+			siteInput.addEventListener('keydown', function(event) {
+				if (event.key === 'Enter') {
+					event.preventDefault();
+					var iframe = document.querySelector('iframe');
+					iframe.src = siteInput.value;
+					menu.removeChild(siteInput);
+					closeMenu();
+				}
+			});
+			
+			menu.insertBefore(siteInput, menu.firstChild);
+			closeMenu();
 		}
-
-		function injectCode() {
-			var menu = document.getElementById('menu');
-			var codeInput = document.getElementById('codeInput');
-			var code = codeInput.value;
-			var iframe = document.querySelector('iframe');
-			iframe.contentWindow.eval(code);
-			codeInput.value = '';
-			hideMenu();
-		}
-
-		function editCode() {
-			var editButton = document.getElementById('editButton');
-			var codeContainer = document.getElementById('editCodeContainer');
-			var codeTextArea = document.getElementById('codeTextArea');
+		
+		function showInjectInput() {
 			var injectButton = document.getElementById('injectButton');
-			var code = injectButton.getAttribute('data-code');
-
-			editButton.style.display = 'none';
-			codeContainer.style.display = 'block';
-			codeTextArea.value = code;
-			injectButton.innerText = 'Update';
-			injectButton.setAttribute('onclick', 'updateCode()');
-		}
-
-		function updateCode() {
-			var codeTextArea = document.getElementById('codeTextArea');
-			var injectButton = document.getElementById('injectButton');
-
-			var code = codeTextArea.value;
-			injectButton.setAttribute('data-code', code);
-
-			alert('Code updated successfully!');
-
-			var editButton = document.getElementById('editButton');
-			var codeContainer = document.getElementById('editCodeContainer');
-
-			editButton.style.display = 'inline-block';
-			codeContainer.style.display = 'none';
-			injectButton.innerText = 'Inject';
-			injectButton.setAttribute('onclick', 'injectCode()');
+			var menu = document.getElementById('menu');
+			var injectInput = document.createElement('input');
+			
+			injectInput.type = 'text';
+			injectInput.id = 'injectInput';
+			injectInput.placeholder = 'Enter JavaScript code';
+			injectInput.addEventListener('keydown', function(event) {
+				if (event.key === 'Enter') {
+					event.preventDefault();
+					var code = injectInput.value;
+					var iframe = document.querySelector('iframe');
+					iframe.contentWindow.eval(code);
+					menu.removeChild(injectInput);
+					closeMenu();
+				}
+			});
+			
+			menu.insertBefore(injectInput, menu.firstChild);
+			closeMenu();
 		}
 	</script>
 </head>
 <body>
 	<iframe is="x-frame-bypass" src="https://www.bing.com/"></iframe>
-	<button class="button-menu" onclick="toggleMenu()">Menu</button>
-	<div id="menu" class="menu">
-		<button class="close-button" onclick="hideMenu()">X</button>
-		<button class="site-button" onclick="toggleMenu()">Site</button>
-		<button class="inject-button" onclick="toggleMenu()">Inject</button>
-		<div class="input-container" style="display: none;">
-			<input type="text" id="siteInput" placeholder="Enter URL and press Enter">
-		</div>
-		<div class="input-container" style="display: none;">
-			<textarea id="codeInput" placeholder="Enter JavaScript code and press Enter"></textarea>
-		</div>
-	</div>
+	<a href="https://www.securly.com"><alt="Created By Mark Kucherenko я блин хакер X_X"></a>
 	<div id="editButtonContainer">
 		<button id="editButton" onclick="editCode()">Edit</button>
 	</div>
@@ -167,38 +156,24 @@
 		<textarea id="codeTextArea" placeholder="Paste your JavaScript bookmarklet code here"></textarea>
 	</div>
 	<button id="injectButton" data-code="alert('Initial code');" onclick="injectCode()">Inject</button>
-
+	
+	<div class="menu" id="menu" style="display: none;">
+		<button onclick="showSiteInput()">Site</button>
+		<button onclick="showInjectInput()">Inject</button>
+		<button class="close" onclick="closeMenu()">X</button>
+	</div>
+	
 	<script>
-		var siteButton = document.querySelector('.site-button');
-		siteButton.addEventListener('click', function () {
-			var siteInputContainer = document.querySelector('.input-container:nth-child(1)');
-			var codeInputContainer = document.querySelector('.input-container:nth-child(2)');
-			siteInputContainer.style.display = 'block';
-			codeInputContainer.style.display = 'none';
-			hideMenu();
-		});
-
-		var injectButton = document.querySelector('.inject-button');
-		injectButton.addEventListener('click', function () {
-			var siteInputContainer = document.querySelector('.input-container:nth-child(1)');
-			var codeInputContainer = document.querySelector('.input-container:nth-child(2)');
-			siteInputContainer.style.display = 'none';
-			codeInputContainer.style.display = 'block';
-			hideMenu();
-		});
-
-		var siteInput = document.getElementById('siteInput');
-		siteInput.addEventListener('keyup', function (event) {
-			if (event.key === 'Enter') {
-				redirectSite();
-			}
-		});
-
-		var codeInput = document.getElementById('codeInput');
-		codeInput.addEventListener('keyup', function (event) {
-			if (event.key === 'Enter') {
-				injectCode();
-			}
+		var iframe = document.querySelector('iframe');
+		iframe.addEventListener('load', function() {
+			var menuButton = document.createElement('button');
+			menuButton.innerText = 'Menu';
+			menuButton.style.position = 'absolute';
+			menuButton.style.bottom = '20px';
+			menuButton.style.right = '20px';
+			menuButton.addEventListener('click', toggleMenu);
+			
+			document.body.appendChild(menuButton);
 		});
 	</script>
 </body>

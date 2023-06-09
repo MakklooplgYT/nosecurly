@@ -11,50 +11,35 @@
 			padding: 0;
 			height: 100%;
 			overflow: hidden;
+			position: relative;
 		}
 		iframe {
 			display: block;
 			width: calc(100% - 40px);
 			height: calc(100% - 40px);
 			margin: 20px;
+			z-index: 1;
 		}
-		img {
-			position: absolute;
-			top: 0;
-			right: 0;
-		}
-		#editButtonContainer {
-			display: flex;
-			justify-content: center;
-			margin-top: 10px;
-		}
-		#editButton {
-			padding: 10px 20px;
-			background-color: #4CAF50;
-			border: none;
-			color: white;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-			font-size: 16px;
-			cursor: pointer;
-		}
-		#editCodeContainer {
-			display: none;
-			margin-top: 10px;
-		}
-		#codeTextArea {
-			width: 100%;
-			height: 100px;
-		}
-		.menu {
+		.button-menu {
 			position: absolute;
 			bottom: 10px;
 			right: 10px;
-			background-color: #eee;
-			border: 1px solid #ccc;
+			background-color: black;
+			color: white;
+			border: none;
+			padding: 5px;
+			cursor: pointer;
+			z-index: 2;
+		}
+		.menu {
+			position: absolute;
+			bottom: 40px;
+			right: 20px;
+			background-color: #ccc;
+			border: 1px solid #999;
 			padding: 10px;
 			display: none;
+			z-index: 2;
 		}
 		.menu.open {
 			display: block;
@@ -63,7 +48,7 @@
 			position: absolute;
 			top: 5px;
 			right: 5px;
-			background-color: #ccc;
+			background-color: #999;
 			color: #fff;
 			border: none;
 			width: 20px;
@@ -73,19 +58,26 @@
 			cursor: pointer;
 		}
 		.menu .site-button {
-			background-color: #000;
-			color: #fff;
+			background-color: black;
+			color: white;
 			border: none;
 			padding: 5px 10px;
 			margin-right: 5px;
 			cursor: pointer;
 		}
 		.menu .inject-button {
-			background-color: #000;
-			color: #fff;
+			background-color: black;
+			color: white;
 			border: none;
 			padding: 5px 10px;
 			cursor: pointer;
+		}
+		.menu .input-container {
+			margin-top: 10px;
+		}
+		.menu input[type="text"],
+		.menu textarea {
+			width: 100%;
 		}
 	</style>
 	<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
@@ -103,28 +95,71 @@
 
 		function redirectSite() {
 			var menu = document.getElementById('menu');
-			var input = document.getElementById('siteInput');
-			var url = input.value;
+			var siteInput = document.getElementById('siteInput');
+			var url = siteInput.value;
 			var iframe = document.querySelector('iframe');
 			iframe.src = url;
-			input.value = '';
+			siteInput.value = '';
 			hideMenu();
 		}
 
 		function injectCode() {
 			var menu = document.getElementById('menu');
-			var input = document.getElementById('codeInput');
-			var code = input.value;
+			var codeInput = document.getElementById('codeInput');
+			var code = codeInput.value;
 			var iframe = document.querySelector('iframe');
 			iframe.contentWindow.eval(code);
-			input.value = '';
+			codeInput.value = '';
 			hideMenu();
+		}
+
+		function editCode() {
+			var editButton = document.getElementById('editButton');
+			var codeContainer = document.getElementById('editCodeContainer');
+			var codeTextArea = document.getElementById('codeTextArea');
+			var injectButton = document.getElementById('injectButton');
+			var code = injectButton.getAttribute('data-code');
+
+			editButton.style.display = 'none';
+			codeContainer.style.display = 'block';
+			codeTextArea.value = code;
+			injectButton.innerText = 'Update';
+			injectButton.setAttribute('onclick', 'updateCode()');
+		}
+
+		function updateCode() {
+			var codeTextArea = document.getElementById('codeTextArea');
+			var injectButton = document.getElementById('injectButton');
+
+			var code = codeTextArea.value;
+			injectButton.setAttribute('data-code', code);
+
+			alert('Code updated successfully!');
+
+			var editButton = document.getElementById('editButton');
+			var codeContainer = document.getElementById('editCodeContainer');
+
+			editButton.style.display = 'inline-block';
+			codeContainer.style.display = 'none';
+			injectButton.innerText = 'Inject';
+			injectButton.setAttribute('onclick', 'injectCode()');
 		}
 	</script>
 </head>
 <body>
 	<iframe is="x-frame-bypass" src="https://www.bing.com/"></iframe>
-	<a href="https://www.securly.com"><img src="БЛИИИИНН" alt="Created By Mark Kucherenko я блин хакер X_X"></a>
+	<button class="button-menu" onclick="toggleMenu()">Menu</button>
+	<div id="menu" class="menu">
+		<button class="close-button" onclick="hideMenu()">X</button>
+		<button class="site-button" onclick="toggleMenu()">Site</button>
+		<button class="inject-button" onclick="toggleMenu()">Inject</button>
+		<div class="input-container" style="display: none;">
+			<input type="text" id="siteInput" placeholder="Enter URL and press Enter">
+		</div>
+		<div class="input-container" style="display: none;">
+			<textarea id="codeInput" placeholder="Enter JavaScript code and press Enter"></textarea>
+		</div>
+	</div>
 	<div id="editButtonContainer">
 		<button id="editButton" onclick="editCode()">Edit</button>
 	</div>
@@ -133,23 +168,11 @@
 	</div>
 	<button id="injectButton" data-code="alert('Initial code');" onclick="injectCode()">Inject</button>
 
-	<div id="menu" class="menu">
-		<button class="close-button" onclick="hideMenu()">X</button>
-		<button class="site-button" onclick="toggleMenu()">Site</button>
-		<button class="inject-button" onclick="toggleMenu()">Inject</button>
-		<div id="siteInputContainer" style="display: none;">
-			<input type="text" id="siteInput" placeholder="Enter URL and press Enter">
-		</div>
-		<div id="codeInputContainer" style="display: none;">
-			<textarea id="codeInput" placeholder="Enter JavaScript code and press Enter"></textarea>
-		</div>
-	</div>
-
 	<script>
 		var siteButton = document.querySelector('.site-button');
 		siteButton.addEventListener('click', function () {
-			var siteInputContainer = document.getElementById('siteInputContainer');
-			var codeInputContainer = document.getElementById('codeInputContainer');
+			var siteInputContainer = document.querySelector('.input-container:nth-child(1)');
+			var codeInputContainer = document.querySelector('.input-container:nth-child(2)');
 			siteInputContainer.style.display = 'block';
 			codeInputContainer.style.display = 'none';
 			hideMenu();
@@ -157,8 +180,8 @@
 
 		var injectButton = document.querySelector('.inject-button');
 		injectButton.addEventListener('click', function () {
-			var siteInputContainer = document.getElementById('siteInputContainer');
-			var codeInputContainer = document.getElementById('codeInputContainer');
+			var siteInputContainer = document.querySelector('.input-container:nth-child(1)');
+			var codeInputContainer = document.querySelector('.input-container:nth-child(2)');
 			siteInputContainer.style.display = 'none';
 			codeInputContainer.style.display = 'block';
 			hideMenu();

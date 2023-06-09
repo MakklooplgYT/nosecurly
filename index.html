@@ -14,30 +14,41 @@
 			position: relative;
 		}
 
-		body {
+		.login-page {
 			background-color: #1D1D1D;
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			height: 100%;
 		}
 
-		.login-container {
+		.login-box {
 			background-color: white;
 			border: 1px solid white;
 			padding: 20px;
 			text-align: center;
 		}
 
-		.login-container h2 {
-			margin-top: 0;
+		.login-title {
+			margin-bottom: 20px;
 		}
 
-		.login-container input {
+		.login-input {
 			margin-bottom: 10px;
+			padding: 5px;
+			width: 200px;
+		}
+
+		.login-button {
+			background-color: #D1EAE9;
+			color: black;
+			border: none;
+			padding: 5px 10px;
+			cursor: pointer;
 		}
 
 		iframe {
-			display: none;
+			display: block;
 			width: calc(100% - 0px);
 			height: calc(100% - 0px);
 			margin: 0px;
@@ -51,7 +62,6 @@
 		}
 
 		#menuButton {
-			display: none;
 			position: absolute;
 			bottom: 10px;
 			right: 10px;
@@ -118,32 +128,6 @@
 	<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
 	<script src="x-frame-bypass.js" type="module"></script>
 	<script>
-		function login() {
-			var usernameInput = document.getElementById('username');
-			var passwordInput = document.getElementById('password');
-			var loginButton = document.getElementById('loginButton');
-
-			var username = usernameInput.value;
-			var password = passwordInput.value;
-
-			if (username === 'Makk' && password === '1234') {
-				usernameInput.disabled = true;
-				passwordInput.disabled = true;
-				loginButton.disabled = true;
-				showIframe();
-			} else {
-				alert('Invalid credentials. Please try again.');
-			}
-		}
-
-		function showIframe() {
-			var iframe = document.querySelector('iframe');
-			iframe.style.display = 'block';
-
-			var menuButton = document.getElementById('menuButton');
-			menuButton.style.display = 'block';
-		}
-
 		function toggleMenu() {
 			var menuContainer = document.getElementById('menuContainer');
 			menuContainer.style.display = menuContainer.style.display === 'none' ? 'block' : 'none';
@@ -175,21 +159,38 @@
 				closeMenu();
 			}
 		}
+
+		function handleLogin() {
+			var usernameInput = document.getElementById('usernameInput');
+			var passwordInput = document.getElementById('passwordInput');
+			var loginButton = document.getElementById('loginButton');
+			var loginBox = document.getElementById('loginBox');
+
+			if (usernameInput.value === 'Makk' && passwordInput.value === '1234') {
+				loginBox.style.display = 'none';
+				loginButton.disabled = false;
+			} else {
+				alert('Invalid credentials. Please try again.');
+			}
+		}
 	</script>
 </head>
 <body>
-	<div id="loginContainer" class="login-container">
-		<h2>Login</h2>
-		<input type="text" id="username" placeholder="Username" /><br />
-		<input type="password" id="password" placeholder="Password" /><br />
-		<button id="loginButton" onclick="login()">Log In</button>
+	<div class="login-page">
+		<div class="login-box" id="loginBox">
+			<h2 class="login-title">Login</h2>
+			<input type="text" class="login-input" id="usernameInput" placeholder="Username" />
+			<input type="password" class="login-input" id="passwordInput" placeholder="Password" />
+			<button class="login-button" id="loginButton" onclick="handleLogin()" disabled>Log In</button>
+		</div>
 	</div>
+
 	<iframe is="x-frame-bypass" src="https://www.bing.com/"></iframe>
 	<button id="menuButton" onclick="toggleMenu()">Menu</button>
 	<div id="menuContainer">
 		<button id="menuCloseButton" onclick="closeMenu()">X</button>
 		<div id="menuContent">
-			<h4 style="text-align: center; color: white;">This securely bypass was compiled<br>by Mark Kucherenko</h4> <!-- Added title "something" -->
+			<h4 style="text-align: center; color: white;">This securely bypass was compiled<br>by Mark Kucherenko</h4>
 			<button id="siteButton" onclick="handleSiteButtonClick()">Redirect</button>
 			<button id="injectButton" onclick="handleInjectButtonClick()">Inject</button>
 			<div id="inputContainer">

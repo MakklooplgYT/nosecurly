@@ -12,34 +12,28 @@
 			height: 100%;
 			overflow: hidden;
 			position: relative;
-		}
-
-		.login-page {
 			background-color: #1D1D1D;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			height: 100%;
 		}
-
 		.login-box {
-			border: 1px solid white;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 300px;
 			padding: 20px;
-			text-align: center;
+			background-color: #1D1D1D;
+			border: 1px solid white;
 		}
-
 		.login-title {
 			color: white;
 			font-size: 24px;
 			margin-bottom: 10px;
 		}
-
 		.login-input {
 			width: 100%;
 			padding: 10px;
 			margin-bottom: 10px;
 		}
-
 		.login-button {
 			background-color: #D1EAE9;
 			color: black;
@@ -47,137 +41,29 @@
 			padding: 5px 10px;
 			cursor: pointer;
 		}
-
-		iframe {
-			display: block;
-			width: calc(100% - 0px);
-			height: calc(100% - 0px);
-			margin: 0px;
-			z-index: 0;
-		}
-
-		img {
-			position: absolute;
-			top: 0;
-			right: 0;
-		}
-
-		#menuButton {
-			position: absolute;
-			bottom: 10px;
-			right: 10px;
-			background-color: black;
-			color: white;
-			border: none;
-			padding: 5px 10px;
-			cursor: pointer;
-			z-index: 1;
-		}
-
-		#menuContainer {
-			display: none;
-			position: absolute;
-			bottom: 10px;
-			right: 10px;
-			background-color: #131313;
-			padding: 10px;
-			z-index: 1;
-		}
-
-		#menuCloseButton {
-			position: absolute;
-			top: 5px;
-			right: 5px;
-			background-color: transparent;
-			border: none;
-			color: white;
-			font-weight: bold;
-			cursor: pointer;
-		}
-
-		#menuContent {
-			margin-top: 10px;
-		}
-
-		#siteButton {
-			background-color: #D1EAE9;
-			color: black;
-			border: none;
-			padding: 5px 10px;
-			cursor: pointer;
-		}
-
-		#injectButton {
-			background-color: #D1EAE9;
-			color: black;
-			border: none;
-			padding: 5px 10px;
-			cursor: pointer;
-		}
-
-		#inputContainer {
-			margin-top: 10px;
-		}
-
-		#inputField {
-			background-color: #D1EAE9;
-			width: 92%;
-			padding: 5px;
-			margin-top: 5px;
-		}
 	</style>
 	<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
 	<script src="x-frame-bypass.js" type="module"></script>
 	<script>
-		function toggleMenu() {
-			var menuContainer = document.getElementById('menuContainer');
-			menuContainer.style.display = menuContainer.style.display === 'none' ? 'block' : 'none';
-		}
-
-		function closeMenu() {
-			var menuContainer = document.getElementById('menuContainer');
-			menuContainer.style.display = 'none';
-		}
-
-		function handleSiteButtonClick() {
-			var inputField = document.getElementById('inputField');
-			var url = inputField.value.trim();
-			if (url !== '') {
-				var iframe = document.querySelector('iframe');
-				iframe.src = url;
-				inputField.value = '';
-				closeMenu();
-			}
-		}
-
-		function handleInjectButtonClick() {
-			var inputField = document.getElementById('inputField');
-			var code = inputField.value.trim();
-			if (code !== '') {
-				var iframe = document.querySelector('iframe');
-				iframe.contentWindow.eval(code);
-				inputField.value = '';
-				closeMenu();
-			}
-		}
-
 		function handleLogin() {
 			var username = document.getElementById('username').value;
 			var password = document.getElementById('password').value;
 			if (username === 'Makk' && password === '1234') {
 				document.getElementById('loginPage').style.display = 'none';
 				document.getElementById('contentPage').style.display = 'block';
+			} else {
+				alert('Credentials are wrong. Try again.');
 			}
 		}
 	</script>
 </head>
 <body>
-	<div id="loginPage" class="login-page">
+	<div id="loginPage">
 		<div class="login-box">
-				<h2 class="login-title">Login</h2>
-				<input type="text" id="username" class="login-input" placeholder="Username" />
-				<input type="password" id="password" class="login-input" placeholder="Password" />
-				<button id="loginButton" class="login-button" onclick="handleLogin()">Log In</button>
+			<h2 class="login-title">Login</h2>
+			<input type="text" id="username" class="login-input" placeholder="Username" />
+			<input type="password" id="password" class="login-input" placeholder="Password" />
+			<button id="loginButton" class="login-button" onclick="handleLogin()">Login</button>
 		</div>
 	</div>
 	<div id="contentPage" style="display: none;">

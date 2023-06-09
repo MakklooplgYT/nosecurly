@@ -112,10 +112,10 @@
 			var passwordInput = document.getElementById('password');
 			var loginButton = document.getElementById('loginButton');
 
-			var username = usernameInput.value;
-			var password = passwordInput.value;
+			var username = atob(usernameInput.value);
+			var password = atob(passwordInput.value);
 
-			if (username === 'user' && password === 'nosecurly') {
+			if (username === 'dXNlcg==' && password === 'bm9zZWN1cmx5') {
 				document.getElementById('loginContainer').style.display = 'none'; // Hide the login container
 				document.querySelector('iframe').style.display = 'block'; // Show the iframe
 				document.getElementById('menuButton').style.display = 'block'; // Show the menu button

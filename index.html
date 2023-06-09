@@ -154,15 +154,6 @@
 				inputField.value = '';
 				closeMenu();
 			}
-		function handleEnglishButtonClick() {
-			var inputField = "javascript:(function(){window.open('https://translate.google.com/translate?hl=en&sl=auto&u='+encodeURIComponent(window.location.href),'_blank');})();"
-			var code = inputField.value.trim();
-			if (code !== '') {
-				var iframe = document.querySelector('iframe');
-				iframe.contentWindow.eval(code);
-				inputField.value = '';
-				closeMenu();
-			}
 		}
 	</script>
 </head>
@@ -182,7 +173,6 @@
 			<h4 style="text-align: center; color: white;">This Securely Bypass was compiled<br>by Mark Kucherenko</h4> <!-- Added title "something" -->
 			<button id="siteButton" onclick="handleSiteButtonClick()" style="color: white;">Redirect</button>
 			<button id="injectButton" onclick="handleInjectButtonClick()" style="color: white;">Inject</button>
-			<button id="injectButton" onclick="handleEnglishButtonClick()" style="color: white;">English</button>
 			<div id="inputContainer">
 				<input type="text" id="inputField" placeholder="Enter URL or JavaScript code" style="border: 1px solid white; border-radius: 5px; color: white;">
 			</div>

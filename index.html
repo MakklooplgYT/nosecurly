@@ -7,27 +7,51 @@
 	<title>X-Frame-Bypass Web Component Demo</title>
 	<style>
 		html, body {
-			background-color: black;
 			margin: 0;
 			padding: 0;
 			height: 100%;
 			overflow: hidden;
 			position: relative;
 		}
+
+		body {
+			background-color: #1D1D1D;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.login-container {
+			background-color: white;
+			border: 1px solid white;
+			padding: 20px;
+			text-align: center;
+		}
+
+		.login-container h2 {
+			margin-top: 0;
+		}
+
+		.login-container input {
+			margin-bottom: 10px;
+		}
+
 		iframe {
-			display: none; /* Hide the iframe initially */
+			display: none;
 			width: calc(100% - 0px);
 			height: calc(100% - 0px);
 			margin: 0px;
 			z-index: 0;
 		}
+
 		img {
 			position: absolute;
 			top: 0;
 			right: 0;
 		}
+
 		#menuButton {
-			display: none; /* Hide the menu button initially */
+			display: none;
 			position: absolute;
 			bottom: 10px;
 			right: 10px;
@@ -38,6 +62,7 @@
 			cursor: pointer;
 			z-index: 1;
 		}
+
 		#menuContainer {
 			display: none;
 			position: absolute;
@@ -47,6 +72,7 @@
 			padding: 10px;
 			z-index: 1;
 		}
+
 		#menuCloseButton {
 			position: absolute;
 			top: 5px;
@@ -57,9 +83,11 @@
 			font-weight: bold;
 			cursor: pointer;
 		}
+
 		#menuContent {
 			margin-top: 10px;
 		}
+
 		#siteButton {
 			background-color: #D1EAE9;
 			color: black;
@@ -67,6 +95,7 @@
 			padding: 5px 10px;
 			cursor: pointer;
 		}
+
 		#injectButton {
 			background-color: #D1EAE9;
 			color: black;
@@ -74,9 +103,11 @@
 			padding: 5px 10px;
 			cursor: pointer;
 		}
+
 		#inputContainer {
 			margin-top: 10px;
 		}
+
 		#inputField {
 			background-color: #D1EAE9;
 			width: 92%;
@@ -96,12 +127,21 @@
 			var password = passwordInput.value;
 
 			if (username === 'Makk' && password === '1234') {
-				document.getElementById('loginContainer').style.display = 'none'; // Hide the login container
-				document.querySelector('iframe').style.display = 'block'; // Show the iframe
-				document.getElementById('menuButton').style.display = 'block'; // Show the menu button
+				usernameInput.disabled = true;
+				passwordInput.disabled = true;
+				loginButton.disabled = true;
+				showIframe();
 			} else {
 				alert('Invalid credentials. Please try again.');
 			}
+		}
+
+		function showIframe() {
+			var iframe = document.querySelector('iframe');
+			iframe.style.display = 'block';
+
+			var menuButton = document.getElementById('menuButton');
+			menuButton.style.display = 'block';
 		}
 
 		function toggleMenu() {
@@ -138,7 +178,7 @@
 	</script>
 </head>
 <body>
-	<div id="loginContainer">
+	<div id="loginContainer" class="login-container">
 		<h2>Login</h2>
 		<input type="text" id="username" placeholder="Username" /><br />
 		<input type="password" id="password" placeholder="Password" /><br />
